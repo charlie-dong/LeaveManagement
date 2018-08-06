@@ -35,7 +35,7 @@ class Profile(models.Model):
     anual_leave_remain = models.IntegerField(default=10)
     sick_leave_quota = models.IntegerField(default=10)
     sick_leave_remain = models.IntegerField(default=5)
-    #supervisor = models.ForeignKey(User, on_delete=models.PROTECT)
+    is_approver = models.BooleanField(User, 'approver status', default=False)
     
     def __str__(self):
         return self.user.username
@@ -61,9 +61,10 @@ class LeaveRequest(models.Model):
         choices = REQUEST_STATUS_CHOIES,
         default = PENDING,
         )
-    leave_requester = models.ForeignKey(User, on_delete=models.CASCADE)
+    leave_requester = models.CharField(max_length = 200)
+    leave_approver = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def leave_days(self):
         delta = self.leave_end_date - self.leave_start_date
-        return delta.day
-
+        return delta
+    
