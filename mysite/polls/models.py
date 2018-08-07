@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
@@ -61,7 +62,7 @@ class LeaveRequest(models.Model):
         choices = REQUEST_STATUS_CHOIES,
         default = PENDING,
         )
-    leave_requester = models.CharField(max_length = 200)
+    leave_requester = models.ForeignKey(User, on_delete=models.CASCADE, related_name="creator")
     leave_approver = models.ForeignKey(User, limit_choices_to={'profile__is_approver': True}, on_delete=models.CASCADE)
     
     def leave_days(self):

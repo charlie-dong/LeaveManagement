@@ -20,11 +20,6 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ['question_text']
 
 class LeaveRequestAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Leave start', {'fields': ['leave_start_date']}),
-        ('Leave end', {'fields': ['leave_end_date']}),
-        ('Approver', {'fields': ['leave_approver']}),
-        ]
     list_display = ('leave_requester', 'leave_start_date', 'leave_end_date', 'leave_days', 'leave_request_status', 'leave_approver')
     
 class ProfileInline(admin.StackedInline):
